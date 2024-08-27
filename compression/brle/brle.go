@@ -1,6 +1,7 @@
 package brle
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -101,7 +102,72 @@ func BlankRunEncode(array []bool, powerOfTwo int) []bool {
 
 }
 
-// Recursive function to split a run into multiple runs
+func StepBlankRunEncode(array []bool, powerOfTwo int) []bool {
+	encoded := make([]bool, 0) // TODO predict this to save memory allocation time
+
+	// find how many bits are needed to store arraySize
+	bitLenOfArraySize := math.Ceil(math.Log2(float64(len(array))))
+
+	// if it is more than 53 bits (can store 1petabyte) then we will panic
+	if bitLenOfArraySize > 53 {
+		panic("Array size is too large")
+	}
+
+	// use 53 bits to store the bitLenOfArraySize
+	bitLenOfArraySizeBits := make([]bool, 0)
+	for j := 52; j >= 0; j-- {
+		bitLenOfArraySizeBits = append(bitLenOfArraySizeBits, (int(bitLenOfArraySize)>>j)&1 == 1)
+	}
+	encoded = append(encoded, bitLenOfArraySizeBits...)
+
+	fmt.Println("Sec1:", bitLenOfArraySizeBits)
+	fmt.Println("Sec1 len:", len(bitLenOfArraySizeBits))
+
+	// use bitLenOfArraySize bits to store the arraySize
+	arraySize := len(array)
+	fmt.Printf("Array size: %d\n", arraySize)
+	arraySizeBits := make([]bool, 0, int(bitLenOfArraySize))
+	for j := int(bitLenOfArraySize) - 1; j >= 0; j-- {
+		arraySizeBits = append(arraySizeBits, (arraySize>>uint(j))&1 == 1)
+	}
+	encoded = append(encoded, arraySizeBits...)
+
+	fmt.Println("Sec2:", arraySizeBits)
+
+	// convert the power of two to a boolean array and append them to the encoded array
+	// 5 bits
+	powerOfTwoBits := make([]bool, 0, 5)
+	for j := 4; j >= 0; j-- {
+		powerOfTwoBits = append(powerOfTwoBits, (powerOfTwo>>j)&1 == 1)
+	}
+	encoded = append(encoded, powerOfTwoBits...)
+
+	fmt.Println("Sec3:", powerOfTwoBits)
+
+	// loop thorugh the input array to find zeros
+	run := 0
+	for i := 0; i < len(array); i++ {
+		// if the next one is false and run is less than powerOfTwo bits long increment run
+		if (!array[i] && run < int(math.Pow(2, float64(powerOfTwo)))) {
+			run++
+		} else {
+			// convert the run to a boolean array and append them to the encoded array
+			add := []bool{}
+			for j := powerOfTwo - 1; j >= 0; j-- {
+				add = append(add, (run>>j)&1 == 1)
+			}
+			fmt.Println("Add:", add)
+			encoded = append(encoded, add...)
+			encoded = append(encoded, array[i])
+			run = 0
+		}
+	}
+
+	return encoded
+
+}
+
+// Function to split a run into multiple runs
 func splitByPowerOfTwo(run, power int, end bool) ([]int, []bool) {
 	// Check if the run is smaller than the power of two
 	if run <= power {
