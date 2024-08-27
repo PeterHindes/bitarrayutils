@@ -1,8 +1,6 @@
 package printbrle
 
 import (
-	"fmt"
-
 	"github.com/PeterHindes/bitarrayutils/debug/printbitswithspace"
 )
 
@@ -16,7 +14,7 @@ func FormatBRLE(brleEncodedArray []bool, maxBits int) string {
 	return printbitswithspace.FormatBitsWithSpace(brleEncodedArray, spaces, maxBits)
 }
 
-func brleSpaces(brleEncodedArray []bool) []int {
+func brleSpaces(brleEncodedArray []bool) []int { // TODO this isnt working 
 	spaces := []int{}
 
 	i := 0
@@ -46,15 +44,10 @@ func brleSpaces(brleEncodedArray []bool) []int {
 	}
 
 	// add spaces after every rulength bit count+1 bits
-	for j := 0; j < runLengthBitCount+1 && i < len(brleEncodedArray); j++ {
+	for i < len(brleEncodedArray) {
 		spaces = append(spaces, i)
 		i += runLengthBitCount + 1
 	}
 
-	fmt.Println("Spaces:", spaces)
-
 	return spaces
 }
-
-// func brleSpaces(brleEncodedArray []bool, powerOfTwo int) []int {
-// 	spaces := []int{53}
