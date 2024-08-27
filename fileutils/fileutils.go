@@ -1,4 +1,4 @@
-package bit-array-utils/file_utils
+package fileutils
 
 import (
     "io"
