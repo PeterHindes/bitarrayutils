@@ -5,6 +5,7 @@ import (
     "math/rand"
 	// "fmt"
 	// "time"
+	"github.com/PeterHindes/bitarrayutils/debug/printbrle"
 )
 
 func TestBlankRunEncode(t *testing.T) {
@@ -21,7 +22,8 @@ func TestBlankRunEncode(t *testing.T) {
     for _, test := range tests {
         encoded := BlankRunEncode(test.input, test.powerOfTwo)
         if len(encoded) != test.expectedLen {
-            t.Errorf("BlankRunEncode(%v, %d) = %v, expected length %d", test.input, test.powerOfTwo, encoded, test.expectedLen)
+            printbrle.PrintBrle(encoded)
+            t.Errorf("%v, expected length %d", len(encoded), test.expectedLen)
         }
     }
 }

@@ -1,0 +1,4 @@
+github.com/PeterHindes/bitarrayutils/debug/printbitswithspace v0.0.0-20240827011631-12128a21e411 h1:FJDOaZ4g4KzUEHr1gfvHgzEv224he55iXCyWYwOM2xg=
+github.com/PeterHindes/bitarrayutils/debug/printbitswithspace v0.0.0-20240827011631-12128a21e411/go.mod h1:J71b2ME8SGYcq73qFoi15dkZWUWdF1LWsiAeSVCpHuM=
+github.com/PeterHindes/bitarrayutils/debug/printbrle v0.0.0-20240827011631-12128a21e411 h1:S1HoIFL8DcWgNGhOSMW2tRUI5XLXTxy15ZhhKsY2i5A=
+github.com/PeterHindes/bitarrayutils/debug/printbrle v0.0.0-20240827011631-12128a21e411/go.mod h1:11kd+MfANu/bi8suoSHQUY9e83vFyWeDCxnN9ky9EB0=

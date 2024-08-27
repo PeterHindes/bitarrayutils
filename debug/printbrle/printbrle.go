@@ -1,10 +1,10 @@
-package main
+package printbrle
 
 import (
 	"github.com/PeterHindes/bitarrayutils/debug/printbitswithspace"
 )
 
-func printbrle(brleEncodedArray []bool) {
+func PrintBRLE(brleEncodedArray []bool) {
 	spaces := []int{53, 56, 61}
 
 	// Extract the runlength bit count from 56 to 61
